@@ -1,0 +1,35 @@
+---
+swagger: "2.0"
+info:
+  description: "Simple time api"
+  version: "0.1.0"
+  title: "Time"
+  termsOfService: ""
+  contact:
+    email: "root@localhost.local"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+basePath: "/"
+tags:
+- name: "time"
+  description: "Local and GMT time endpoints"
+schemes:
+- "http"
+- "https"
+paths:
+  /localtime:
+    get:
+      tags:
+      - "time"
+      summary: "get the local time"
+      description: "Returns local time with Timezone info"
+      produces:
+      - "text/plain"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: string

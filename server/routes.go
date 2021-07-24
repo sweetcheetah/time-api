@@ -9,6 +9,10 @@ import (
 func (s *Server) routes() {
 	s.router.HandleFunc("/localtime", s.handlerLocalTime)
 	s.router.HandleFunc("/", handlerRoot)
+
+	//swagger
+	fs := http.FileServer(http.Dir("./swagger-ui/"))
+	s.router.PathPrefix("/swagger-ui").Handler(http.StripPrefix("/swagger-ui", fs))
 }
 
 func (s *Server) middleware() {
