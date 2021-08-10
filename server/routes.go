@@ -3,6 +3,7 @@ package server
 import (
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -30,9 +31,18 @@ func handlerRoot(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
 	w.Write([]byte("Not Found."))
 }
+
 func (s *Server) handlerLocalTime(w http.ResponseWriter, r *http.Request) {
+	tz := os.Getenv("TIMEZONE")
+	loc, e := time.LoadLocation(tz)
+
+	if e != nil {
+		log.Fatal(e)
+	}
+
 	t := time.Now()
 	w.Header().Set("Content-Type", "text/plain")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(t.Format(time.UnixDate)))
+	timestring := t.In(loc).String()
+	w.Write([]byte(timestring))
 }
